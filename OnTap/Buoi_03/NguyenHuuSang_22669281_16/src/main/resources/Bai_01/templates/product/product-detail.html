@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title></title>
+    <meta charset="UTF-8"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h1>Chi tiết sản phẩm</h1>
+    <form th:object="${product}">
+
+        <table class="form-table table table-bordered">
+            <tr>
+                <td>Tên sản phẩm</td>
+                <td>
+                    <input type="text" th:field="*{name}" placeholder="Nhập tên sản phẩm" disabled>
+                </td>
+            </tr>
+            <tr>
+                <th>Ngày tạo</th>
+                <td>
+                    <input type="date" th:field="*{createdDate}" placeholder="Ngày tạo" disabled>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Giá: </td>
+                <td>
+                    <input type="number" th:field="*{price}" placeholder="Nhập giá" disabled>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Số lượng</td>
+                <td>
+                    <input type="number" th:field="*{quantity}" placeholder="Nhập số lượng" disabled>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>Danh mục</td>
+                <td>
+                    <select th:field="*{category}" disabled>
+                        <option value=""> -- Chon danh mục -- </option>
+                        <option th:each="cat : ${categorys}"
+                                th:value="${cat.id}"
+                                th:text="${cat.name}"
+                                th:selected="${product.category != null and cat.id == product.category.id}">
+                        </option>
+                    </select>
+                </td>
+            </tr>
+
+            <!--            hình ảnh hiện tại-->
+            <tr th:if="${product.image} !=null">
+                <td>Hình ảnh hiện tại: </td>
+                <td>
+                    <img th:src="${'/uploads/' + product.image}"/>
+                </td>
+            </tr>
+
+            <!--            CheckBok: Còn hàng-->
+<!--            CheckBok: Còn hàng&ndash;&gt;-->
+            <tr>
+                <td>Còn hàng:</td>
+                <td>
+                    <input type="checkbox" th:field="*{inStock}" id="inStock" disabled>
+                    <label for="inStock">Sản phầm còn hàngg</label>
+
+                </td>
+            </tr>
+
+            Radio Button: trạng thái sản phẩm-->
+            <tr>
+                <td>Trạng thái</td>
+                <td>
+                    <input type="radio" th:field="*{productCondition}" value="NEW" id="conditionNew" disabled>
+                    <label for="conditionNew">Mới 1000%</label>
+
+                    <input type="radio" th:field="*{productCondition}" value="REFURBISHED" id="conditionRefurbished" disabled>
+                    <label for="conditionRefurbished">Đã tân trang</label>
+
+                    <input type="radio" th:field="*{productCondition}" value="USED" id="conditionUsed" disabled>
+                    <label for="conditionUsed">Đã qua sử dụng</label>
+
+
+                </td>
+            </tr>
+
+            <!--            Select Multiple: colors-->
+<!--            Select Multiple: colors&ndash;&gt;-->
+            <tr>
+                <td>Màu sắc</td>
+                <td>
+                    <select th:field="*{colors}" multiple class="form-select" disabled>
+                        <option value="BLACK">Đenn</option>
+                        <option value="WHITE">Trắng</option>
+                        <option value="RED">Đỏ</option>
+                    </select>
+                    <small>Nhấn Ctrl + để chọn nhiều màu</small>
+                </td>
+            </tr>
+        </table>
+
+        <div class="btn-group">
+
+            <a th:href="@{/products}" class="btn btn-secondary">Quay lại</a>
+
+
+        </div>
+
+    </form>
+</div>
+</body>
+</html>
