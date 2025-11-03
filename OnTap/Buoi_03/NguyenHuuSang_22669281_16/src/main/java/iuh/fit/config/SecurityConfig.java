@@ -30,13 +30,13 @@ public class SecurityConfig {
                 .roles("ADMIN")
                 .build();
 
-        UserDetails customer = User.builder()
-                .username("customer")
+        UserDetails employee = User.builder()
+                .username("employee")
                 .password(encoder.encode("111"))
-                .roles("CUSTOMER")
+                .roles("EMPLOYEE")
                 .build();
 
-        return new InMemoryUserDetailsManager(admin, customer);
+        return new InMemoryUserDetailsManager(admin, employee);
     }
 
     @Bean
@@ -46,17 +46,17 @@ public class SecurityConfig {
                         //Quy tắc mở các trang static resource
                         .requestMatchers("/css/**", "/js/**","/images/**", "/static/uploads/uploads/**").permitAll()
 
-                        //PHân quyền cho các chức năng
+                        //Phân quyền cho các chức năng
                         .requestMatchers("/", "/home", "/login").permitAll()
-                        .requestMatchers("/products", "/products/detail/**", "/products/search").hasAnyRole("CUSTOMER", "ADMIN")
-                        .requestMatchers("/products/add", "products/edit/**", "products/delete/**").hasAnyRole("ADMIN")
+                        .requestMatchers("/busroutes", "/busroutes/detail/**", "/busroutes/search").hasAnyRole("EMPLOYEE", "ADMIN")
+                        .requestMatchers("/busroutes/add", "/busroutes/edit/**", "/busroutes/delete/**").hasRole("ADMIN")
 
                         //Các request còn lại yêu cầu xác thực
                         .anyRequest().authenticated()
 
                 )
                 .formLogin(form -> form
-                        .defaultSuccessUrl("/products", true)
+                        .defaultSuccessUrl("/busroutes", true)
                         .permitAll()
                 )
                 .logout(logout -> logout

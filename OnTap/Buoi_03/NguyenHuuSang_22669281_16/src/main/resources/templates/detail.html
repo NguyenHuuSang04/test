@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Chi tiết tuyến</title>
+</head>
+<body>
+<h1>Chi tiết tuyến xe Bus</h1>
+
+<div>
+    <h2 th:text="${busroute.name}"></h2>
+    <table border="0" cellpadding="4">
+        <tr><th align="left">ID:</th><td th:text="${busroute.id}"></td></tr>
+        <tr><th align="left">Tên tuyến:</th><td th:text="${busroute.name}"></td></tr>
+        <tr><th align="left">Điểm đầu:</th><td th:text="${busroute.start}"></td></tr>
+        <tr><th align="left">Điểm cuối:</th><td th:text="${busroute.end}"></td></tr>
+        <tr><th align="left">Giá vé:</th><td th:text="${busroute.price}"></td></tr>
+        <tr><th align="left">Độ ưu tiên:</th><td th:text="${busroute.priority}"></td></tr>
+        <tr><th align="left">Số trạm:</th><td th:text="${busroute.stationNo}"></td></tr>
+    </table>
+</div>
+
+<p><a th:href="@{/busroutes}">Quay lại danh sách</a></p>
+
+</body>
+</html>

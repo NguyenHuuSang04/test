@@ -1,13 +1,58 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <title></title>
-    <meta charset="UTF-8"/>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Danh sách tuyến</title>
 </head>
 <body>
-<div class="container">
-    <h1>Danh sách tuyến xe</h1>
+<h1>Danh sách tuyến xe Bus</h1>
+
+<!-- Tìm kiếm -->
+<form th:action="@{/busroutes/search}" method="get">
+    <input type="text" name="name" placeholder="Tìm theo tên">
+    <button type="submit">Tìm</button>
+</form>
+
+<!-- Nút thêm mới (chỉ admin) -->
+<div sec:authorize="hasRole('ADMIN')">
+    <a th:href="@{/busroutes/add}">Thêm tuyến mới</a>
 </div>
+
+<!-- Bảng danh sách -->
+<table border="1" cellspacing="0" cellpadding="4">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Tên tuyến</th>
+        <th>Điểm đầu</th>
+        <th>Điểm cuối</th>
+        <th>Giá vé</th>
+        <th>Độ ưu tiên</th>
+        <th>Số trạm</th>
+        <th>Thao tác</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="bus : ${busroutes}">
+        <td th:text="${bus.id}"></td>
+        <td th:text="${bus.name}"></td>
+        <td th:text="${bus.start}"></td>
+        <td th:text="${bus.end}"></td>
+        <td th:text="${bus.price}"></td>
+        <td th:text="${bus.priority}"></td>
+        <td th:text="${bus.stationNo}"></td>
+        <td>
+            <a th:href="@{/busroutes/detail/{id}(id=${bus.id})}">Chi tiết</a>
+            <span sec:authorize="hasRole('ADMIN')"> |
+                <a th:href="@{/busroutes/edit/{id}(id=${bus.id})}">Sửa</a> |
+                <a th:href="@{/busroutes/delete/{id}(id=${bus.id})}" onclick="return confirm('Bạn có chắc?')">Xóa</a>
+            </span>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<p><a href="/logout">Đăng xuất</a></p>
+
 </body>
 </html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Form tuyến</title>
+</head>
+<body>
+<h1 th:text="${busroute.id == null ? 'Thêm tuyến mới' : 'Chỉnh sửa tuyến'}"></h1>
+
+<form th:action="${busroute.id == null ? '/busroutes/add' : '/busroutes/edit/' + busroute.id}" th:object="${busroute}" method="post">
+    <div>
+        <label>Tên tuyến:</label>
+        <input type="text" th:field="*{name}" required>
+    </div>
+    <div>
+        <label>Điểm đầu:</label>
+        <input type="text" th:field="*{start}" required>
+    </div>
+    <div>
+        <label>Điểm cuối:</label>
+        <input type="text" th:field="*{end}" required>
+    </div>
+    <div>
+        <label>Giá vé:</label>
+        <input type="number" th:field="*{price}" required>
+    </div>
+    <div>
+        <label>Độ ưu tiên:</label>
+        <input type="number" th:field="*{priority}" required>
+    </div>
+    <div>
+        <label>Số trạm:</label>
+        <input type="number" th:field="*{stationNo}" required>
+    </div>
+    <div>
+        <button type="submit">Lưu</button>
+        <a th:href="@{/busroutes}">Hủy</a>
+    </div>
+</form>
+
+</body>
+</html>

@@ -56,9 +56,9 @@ public class BusrouteController {
         return "redirect:/busroutes";
     }
 
-    // d
+    // f - Edit
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/edit")
+    @GetMapping("/edit/{id}")
     public String showFormEdit(@PathVariable Integer id, Model model) {
         Busroute busroute = busrouteService.getById(id);
         model.addAttribute("busroute", busroute);
@@ -70,8 +70,15 @@ public class BusrouteController {
     public String edit(@PathVariable Integer id,
                        @ModelAttribute Busroute busroute) throws IOException {
         busroute.setId(id);
-        ;
         busrouteService.save(busroute);
+        return "redirect:/busroutes";
+    }
+
+    // e - Delete
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable Integer id) {
+        busrouteService.delete(id);
         return "redirect:/busroutes";
     }
 

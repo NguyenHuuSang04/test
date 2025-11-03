@@ -13,7 +13,7 @@ public class Busroute {
     private String end;
     private Integer price;
     private Integer priority;
-    @Column(name = "stationNo")
+    @Column(name = "StationNo")
     private Integer stationNo;
 
     public Busroute() {
